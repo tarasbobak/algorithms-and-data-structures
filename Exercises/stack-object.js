@@ -60,3 +60,39 @@ class Stack {
     return this._counter;
   }
 }
+
+class MinStack extends Stack {
+  constructor(maxCapacity) {
+    super(maxCapacity);
+    this._minStack = new Stack();
+  }
+
+  push(item) {
+    if (typeof item !== 'number') {
+      console.error('Cannot push not number value. Please provide one.');
+      return;
+    }
+
+    if (this._maxCapacity && this._counter + 1 > this._maxCapacity) {
+      console.error('Max capacity already reached. Remove element before adding a new one.');
+      return;
+    }
+
+    const minStackVal = this._minStack.peek();
+    if (typeof minStackVal === 'undefined' || item < minStackVal) {
+      this._minStack.push(item);
+    } else {
+      this._minStack.push(this._minStack.peek());
+    }
+
+    this._counter++;
+    this.storage[this._counter] = item;
+  }
+
+  pop() {
+    const poppedItem = super.pop();
+    this._minStack.pop();
+
+    return poppedItem;
+  }
+}
