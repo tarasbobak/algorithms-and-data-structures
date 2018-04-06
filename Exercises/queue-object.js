@@ -65,3 +65,66 @@ class Queue {
     console.error('There is no such element in the stack');
   }
 }
+
+// Implement queue with two stacks
+class Stack {
+  constructor() {
+    this._counter = 0;
+    this.storage = {};
+  }
+
+  push(item) {
+    if (typeof item === 'undefined') {
+      console.error('Cannot push undefined value. Please provide one.');
+      return;
+    }
+
+    this._counter++;
+    this.storage[this._counter] = item;
+  }
+
+  pop() {
+    const poppedItem = this.storage[this._counter];
+
+    delete this.storage[this._counter];
+    this._counter--;
+
+    return poppedItem;
+  }
+
+  peek() {
+    return this.storage[this._counter];
+  }
+
+  count() {
+    return this._counter;
+  }
+}
+
+class TwoStacksQueue {
+  constructor() {
+    this._inStack = new Stack();
+    this._outStack = new Stack();
+  }
+
+  enqueue(value) {
+    this._inStack.push(value);
+  }
+
+  dequeue() {
+    if (this._outStack.count() === 0) {
+      this.transferStacks();
+    }
+    return this._outStack.pop();
+  }
+
+  transferStacks() {
+    while(this._inStack.count() > 0) {
+      this._outStack.push(this._inStack.pop());
+    }
+  }
+
+  count() {
+    return this._inStack.count() + this._outStack.count();
+  };
+}
