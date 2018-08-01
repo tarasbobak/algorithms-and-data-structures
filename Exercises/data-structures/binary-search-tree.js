@@ -102,4 +102,49 @@ class SearchTree {
     }
     console.log(node.value);
   }
+
+  deleteMin(node, parent) {
+    if (!node.left && !node.right) {
+      if (parent) {
+        // Leaf node
+        parent.left = null;
+      } else {
+        // Root node.
+        node.value = null;
+      }
+    } else if (!node.left && node.right) {
+      if (parent) {
+        // Node with right subtree
+        parent.left = node.right;
+      } else {
+        // Root node with right subtree
+        node.value = node.right.value;
+        node.right = node.right.right;
+      }
+    }
+
+    if (node.left) {
+      this.deleteMin(node.left, node);
+    }
+  }
+
+  deleteMax(node, parent) {
+    if (!node.left && !node.right) {
+      if (parent) {
+        parent.right = null;
+      } else {
+        node.value = null;
+      }
+    } else if(node.left && !node.right) {
+      if (parent) {
+        parent.right = node.left;
+      } else {
+        node.value = node.left.value;
+        node.left = node.left.left;
+      }
+    }
+    if (node.right) {
+      this.deleteMax(node.right, node);
+    }
+  }
 }
