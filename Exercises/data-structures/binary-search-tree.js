@@ -1,3 +1,5 @@
+// Simple BST implementation.
+
 class Node {
   constructor(value) {
     this.value = value;
@@ -67,5 +69,37 @@ class SearchTree {
         }
       }
     }
+  }
+
+  // Depth-first traversal
+
+  traverseInOrder(node) {
+    if (node.left) {
+      this.traverseInOrder(node.left);
+    }
+    console.log(node.value);
+    if (node.right) {
+      this.traverseInOrder(node.right);
+    }
+  }
+
+  traversePreOrder(node) {
+    console.log(node.value);
+    if (node.left) {
+      this.traversePreOrder(node.left);
+    }
+    if (node.right) {
+      this.traversePreOrder(node.right);
+    }
+  }
+
+  traversePostOrder(node) {
+    if (node.left) {
+      this.traversePostOrder(node.left);
+    }
+    if (node.right) {
+      this.traversePostOrder(node.right);
+    }
+    console.log(node.value);
   }
 }
